@@ -23,7 +23,7 @@ class MainActivity : FlutterActivity() {
     private val CHANNEL = "com.example.time_test"
     private var eventSink: EventChannel.EventSink? = null
 
-        //for the very first time when the app is installed
+    //for the very first time when the app is installed
     private fun checkAutoTimeSettings(): Boolean {
         val autoTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             Settings.Global.getInt(contentResolver, Settings.Global.AUTO_TIME)
@@ -38,6 +38,7 @@ class MainActivity : FlutterActivity() {
         return autoTime == 1 && autoTimeZone == 1
     }
 
+    //All the other times it is listening to the changes
     private val observer = object : ContentObserver(Handler(Looper.getMainLooper())) {
         override fun onChange(selfChange: Boolean) {
             Log.d("MainActivity", "onChange")
@@ -75,6 +76,8 @@ class MainActivity : FlutterActivity() {
                     contentResolver.registerContentObserver(Settings.Global.CONTENT_URI, true, observer)
                 }
                 else{
+                    val bothEnabled = checkAutoTimeSettings()
+                    eventSink?.success(bothEnabled)
                     contentResolver.registerContentObserver(Settings.System.CONTENT_URI, true, observer)
                 }
             }

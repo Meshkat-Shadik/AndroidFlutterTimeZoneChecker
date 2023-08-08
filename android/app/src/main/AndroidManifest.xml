@@ -24,15 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-    <receiver android:name=".TimeChangedReceiver"
-     android:enabled="true"
-            android:exported="true"
-    >
-        <intent-filter>
-            <action android:name="android.intent.action.TIME_SET"/>
-            <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
-        </intent-filter>
-    </receiver>
 
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
